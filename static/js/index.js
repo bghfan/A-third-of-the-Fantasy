@@ -176,13 +176,13 @@ document.getElementsByClassName("create")[1].addEventListener("keyup", event => 
 document.getElementsByClassName("create")[1].addEventListener("keydown", event => { if (event.keyCode == 13) { event.preventDefault(); } })
 document.getElementById("div_card").style.minHeight = window.innerHeight - 90 + 'px';
 
-//keyboard type 'enter' to open input_query,need auto remove EventListener
+// keyboard type 'enter' to open input_query,need auto remove EventListener
 let i = 0;
 let enter_keycode = [69, 78, 84, 69, 82];
 const quick_open = event => { if (event.keyCode == enter_keycode[i]) { if (i++ == 4) { $('#collapseb').collapse('show'); $('#a').focus(); i = 0; } } else { i = 0; } };
 document.addEventListener('keyup', quick_open, true);
 
-//show README.md
+// show README.md
 $('#exampleModalLong').on('show.bs.modal', function () { let readme = document.createElement("div"); $(readme).load("README.md", function () { let converter = new showdown.Converter(); $(".modal-body")[0].innerHTML = converter.makeHtml($(readme)[0].innerHTML); }); })
 const rmcollapseb = () => $('#collapseb').collapse('hide'); $('#collapseb').on('show.bs.collapse', function () { document.getElementById('collapseb').addEventListener('click', e => { e.stopPropagation(); }); document.addEventListener('click', rmcollapseb, false); })
 $('#collapseb').on('hidden.bs.collapse', function () { document.getElementById('collapseb').removeEventListener('click', e => { e.stopPropagation(); }); document.removeEventListener('click', rmcollapseb, false); })
@@ -193,5 +193,5 @@ $('#collapsea').on('hidden.bs.collapse', function () { document.getElementById('
 const totop = () => $('body,html').animate({ scrollTop: '0px' });
 const tobottom = () => $('body,html').animate({ scrollTop: $(".footer").offset().top });
 
-//div_skip add button, need auto
-document.getElementById('div_skip').innerHTML = '<button class="btn btn-light btn-sm" onclick = "skip(0)" > 1</button> <button class="btn btn-light btn-sm" onclick="skip(1)">2</button> <button class="btn btn-light btn-sm" onclick="skip(2)">3</button> <button class="btn btn-light btn-sm" onclick="skip(3)">4</button> <button class="btn btn-light btn-sm" onclick="skip(4)">5</button> <button class="btn btn-light btn-sm" onclick="skip(5)">6</button> <button class="btn btn-light btn-sm" onclick="skip(6)">7</button> <button class="btn btn-light btn-sm" onclick="skip(7)">8</button> <input class="btn btn-sm border" border-radius="5px" type="text" id="skip" size="2"> <button class="btn btn-light btn-sm" onclick="skip(document.getElementById("skip").value)">skip</button>' + document.getElementById('div_skip').innerHTML;
+// div_skip add button, need auto
+// document.getElementById('div_skip').innerHTML = '<button class="btn btn-light btn-sm" onclick = "skip(0)" > 1</button> <button class="btn btn-light btn-sm" onclick="skip(1)">2</button> <button class="btn btn-light btn-sm" onclick="skip(2)">3</button> <button class="btn btn-light btn-sm" onclick="skip(3)">4</button> <button class="btn btn-light btn-sm" onclick="skip(4)">5</button> <button class="btn btn-light btn-sm" onclick="skip(5)">6</button> <button class="btn btn-light btn-sm" onclick="skip(6)">7</button> <button class="btn btn-light btn-sm" onclick="skip(7)">8</button> <input class="btn btn-sm border" border-radius="5px" type="text" id="skip" size="2"> <button class="btn btn-light btn-sm" onclick="skip(document.getElementById("skip").value)">skip</button>' + document.getElementById('div_skip').innerHTML;
