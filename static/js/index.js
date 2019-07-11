@@ -37,47 +37,72 @@ const func_query = (json) => {
         else {
             document.getElementById("as").innerHTML = '<a onclick="query()" style="margin-left:-15px;">&nbsp;&nbsp;&nbsp;</a><a class="float-right text-dark">' + getMyDate() + '</a></div>';
         }
-        let div_query = document.getElementById("div_query");
-        div_query.innerHTML = '';
-        let div, aa, b, sum, star;
-        for (j in json) {
-            div = document.createElement("div");
-            aa = document.createElement("a");
-            div.className = "navbar-brand col-12 text-truncate border-bottom";
-            aa.onclick = function () { query(this.innerHTML) };
-            aa.innerHTML = json[j]['a'] || '';
-            div.id = json[j]['_id']['$oid'];
-            div.appendChild(aa);
-            b = document.createElement("a");
-            b.style = "font-size:80%";
-            b.innerHTML = (json[j]['b'] == null || json[j]['b'] == '' ? '' : ' - ' + json[j]['b']);
-            div.appendChild(b);
-            sum = document.createElement("a");
-            sum.className = "float-right";
-            sum.innerHTML = json[j]['count'] || '';
-            div.appendChild(sum);
-            star = document.createElement("img");
-            star.className = "float-right";
-            star.src = 'static/svg/s.svg';
-            star.width = "15";
-            star.style = "margin:10px 5px;";
-            star.onclick = function () { create(this) };
-            div.appendChild(star);
-            div_query.appendChild(div);
-        }
-        let ida = document.getElementsByTagName("img");
-        let str_id = localStorage.getItem('id') || '';
-        for (let i in ida) {
-            if (ida[i].parentNode != undefined && ida[i].parentNode.id != undefined && ida[i].parentNode.id != '' && str_id.indexOf(ida[i].parentNode.id) >= 0) {
-                ida[i].src = "static/svg/star.svg";
-            }
-        }
+        callBack2(json);
         document.getElementById("input_query").value = '';
     }
     catch (e) {
         console.log('error:' + e)
     }
 }
+
+const callBack1 = (json) => {
+    let div_query = document.getElementById("div_query");
+    div_query.innerHTML = '';
+    let div, aa, b, sum, star;
+    for (j in json) {
+        div = document.createElement("div");
+        aa = document.createElement("a");
+        aa.onclick = function () { query(this.innerHTML) };
+        aa.innerHTML = json[j]['a'] || '';
+        b = document.createElement("a");
+        b.style = "font-size:80%";
+        b.innerHTML = (json[j]['b'] == null || json[j]['b'] == '' ? '' : ' - ' + json[j]['b']);
+        sum = document.createElement("a");
+        sum.className = "float-right";
+        sum.innerHTML = json[j]['count'] || '';
+        star = document.createElement("img");
+        star.className = "float-right";
+        star.src = 'static/svg/s.svg';
+        star.width = "15";
+        star.style = "margin:10px 5px;";
+        star.onclick = function () { create(this) };
+        div.className = "navbar-brand col-12 text-truncate border-bottom";
+        div.id = json[j]['_id']['$oid'];
+        div.appendChild(aa);
+        div.appendChild(b);
+        div.appendChild(sum);
+        div.appendChild(star);
+        div_query.appendChild(div);
+    }
+    let ida = document.getElementsByTagName("img");
+    let str_id = localStorage.getItem('id') || '';
+    for (let i in ida) {
+        if (ida[i].parentNode != undefined && ida[i].parentNode.id != undefined && ida[i].parentNode.id != '' && str_id.indexOf(ida[i].parentNode.id) >= 0) {
+            ida[i].src = "static/svg/star.svg";
+        }
+    }
+}
+
+const callBack2 = (json) => {
+    let div_query = document.getElementById("div_query");
+    div_query.innerHTML = '';
+    let div, aa, b;
+    for (j in json) {
+        div = document.createElement("div");
+        aa = document.createElement("a");
+        aa.onclick = () => query(this.innerHTML);
+        aa.innerHTML = json[j]['a'] || '';
+        b = document.createElement("a");
+        b.innerHTML = (json[j]['b'] == null || json[j]['b'] == '' ? '' : json[j]['b'] + ' - ');
+        aa.style = b.innerHTML != '' ? "font-size:60%" : "";
+        div.className = "navbar-brand col-12 text-truncate border-bottom";
+        div.id = json[j]['_id']['$oid'];
+        div.appendChild(b);
+        div.appendChild(aa);
+        div_query.appendChild(div);
+    }
+}
+
 const query2 = str => {
     $('#collapsea').collapse('hide');
     a = str || '';
@@ -100,9 +125,9 @@ const query = str => {
 }
 const skip = num => {
     let url = (a == '' ? '/read.php' : '/read.php?a=' + a);
-    let skip = '&skip=' + num;
+    let skip = '&skip=' + (num - 1);
     if (url.indexOf('?') < 0) {
-        skip = '?skip=' + num;
+        skip = '?skip=' + (num - 1);
     }
     console.log(url + skip);
     window.location.hash = url + skip;

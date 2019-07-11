@@ -27,10 +27,10 @@ if (!empty($_id)) {
         'pipeline' => [
             ['$match' => ['a' => $a]],
             ['$group' => ['_id' => '$b', 'id' => ['$first' => '$_id'], 'count' => ['$sum' => 1]]],
-            ['$sort' => ['count' => -1, 'id' => -1]],
+            ['$sort' => ['count' => -1]],
             ['$skip' => $limit * $skip],
             ['$limit' => $limit],
-            ['$project' => ['_id' => '$id', 'a' => '$_id', 'count' => '$count']]
+            ['$project' => ['_id' => '$id', 'a' => '$_id']]
         ],
         'cursor' => new stdClass,
     ]);
@@ -46,11 +46,10 @@ if (!empty($_id)) {
         'aggregate' => 'a',
         'pipeline' => [
             ['$match' => ['a' => ['$exists' => true]]],
-            ['$group' => ['_id' => '$a', 'id' => ['$first' => '$_id'], 'count' => ['$sum' => 1]]],
-            ['$sort' => ['count' => -1, 'id' => -1]],
+            ['$sort' => ['_id' => -1]],
             ['$skip' => $limit * $skip],
             ['$limit' => $limit],
-            ['$project' => ['_id' => '$id', 'a' => '$_id', 'count' => '$count']]
+            ['$project' => ['_id' => '$_id', 'a' => '$a']]
         ],
         'cursor' => new stdClass,
     ]);
