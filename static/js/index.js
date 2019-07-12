@@ -1,5 +1,5 @@
-var a, b;
-let limit = parseInt((window.innerHeight - 120) / 49);
+let a, b;
+let limit = parseInt((window.innerHeight - 120) / 43);
 const local_host = "https://buguoheng.com";
 const getMyDate = (date = new Date()) => (date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()).toString();
 
@@ -86,19 +86,21 @@ const callBack1 = (json) => {
 const callBack2 = (json) => {
     let div_query = document.getElementById("div_query");
     div_query.innerHTML = '';
-    let div, aa, b;
+    let div, a, b;
     for (j in json) {
         div = document.createElement("div");
-        aa = document.createElement("a");
-        aa.onclick = () => query(this.innerHTML);
-        aa.innerHTML = json[j]['a'] || '';
+        a = document.createElement("a");
+        a.innerHTML = json[j]['a'] || '';
+        a.onclick = function () { query(this.innerHTML); }
+        let ahtml = a.innerHTML;
         b = document.createElement("a");
+        b.onclick = function () { query(ahtml); }
         b.innerHTML = (json[j]['b'] == null || json[j]['b'] == '' ? '' : json[j]['b'] + ' - ');
-        aa.style = b.innerHTML != '' ? "font-size:60%" : "";
+        a.style = b.innerHTML != '' ? "font-size:60%" : "";
         div.className = "navbar-brand col-12 text-truncate border-bottom";
         div.id = json[j]['_id']['$oid'];
         div.appendChild(b);
-        div.appendChild(aa);
+        div.appendChild(a);
         div_query.appendChild(div);
     }
 }
